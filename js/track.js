@@ -16,7 +16,7 @@
                         }
                         newTrack.tags = tags;
                         _track.list.push(newTrack);
-                        var newRow = document.getElementById().insertRow();
+                        var newRow = document.getElementById("track-table").insertRow();
                         if (!err)
                             for (tag in newTrack.tags) {
                                 var newCell = newRow.insertCell();
