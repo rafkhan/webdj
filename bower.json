@@ -1,0 +1,19 @@
+{
+  "name": "webdj",
+  "version": "0.0.0",
+  "homepage": "https://github.com/rafkhan/webdj",
+  "authors": [
+    "Rafael Khan <raf.khan.f@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "q": "1.0.1"
+  }
+}
