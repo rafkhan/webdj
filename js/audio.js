@@ -97,7 +97,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       deckAArtist.innerHTML = song.tags.artist;
       deckAAlbum.innerHTML = song.tags.album;
       peaks = getPeaks(song.buffer, 500);
-      debugger;
     } else if(deckName === 'deckB') {
       deckBName.innerHTML = song.tags.title;
       deckBArtist.innerHTML = song.tags.artist;
