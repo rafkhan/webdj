@@ -3,7 +3,16 @@
     
     _track.list = [];
 
+    _track.playOnDeck = function(deck, i) {
+        audioManager.load(deck, track.list[i]);
+    }
+
     _track.add = function(context, file) {
+        function generateDeckButton(deck, index) {
+            return '<input type="button" value="Load on '+deck+
+                '" onclick="javascript:track.playOnDeck(\''+deck+'\', \''+index+'\');" />';
+        }
+
         var reader = new FileReader();
         var newTrack = {};
         reader.onload = (function(e) {
@@ -14,13 +23,18 @@
                         newTrack.err = err;
                     }
                     newTrack.tags = tags;
-                    _track.list.push(newTrack);
+                    var trackIndex = _track.list.push(newTrack) - 1;
                     var newRow = document.getElementById("track-table").insertRow();
-                    if (!err)
-                        for (var tag in newTrack.tags) {
-                            var newCell = newRow.insertCell();
-                            newCell.innerHTML = newTrack.tags[tag];
-                        }
+                    if (!err) {
+                        var newCell = newRow.insertCell();
+                        newCell.innerHTML = newTrack.tags["title"];
+                        newCell = newRow.insertCell();
+                        newCell.innerHTML = newTrack.tags["album"];
+                        newCell = newRow.insertCell();
+                        newCell.innerHTML = newTrack.tags["artist"];
+                        newCell = newRow.insertCell();
+                        newCell.innerHTML = generateDeckButton('deckA', trackIndex) + generateDeckButton('deckB', trackIndex);
+                    }
                 });
             });
         });
