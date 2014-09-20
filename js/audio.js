@@ -25,6 +25,11 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   var deckBArtist;
   var deckBAlbum;
 
+  var deckACanvas;
+  var deckBCanvas;
+  var deckADrawCtx;
+  var deckBDrawCtx;
+
   _audio.initUI = function() {
     console.log('x');
     deckAName = document.getElementById('deckAName');
@@ -34,6 +39,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     deckBName = document.getElementById('deckBName');
     deckBArtist = document.getElementById('deckBArtist');
     deckBAlbum = document.getElementById('deckBAlbum');
+
+    deckACanvas = document.getElementById('deckACanvas');
+    deckADrawCtx = deckACanvas.getContext('2d');
+
+    deckBCanvas = document.getElementById('deckBCanvas');
+    deckBDrawCtx = deckBCanvas.getContext('2d');
   };
 
 
