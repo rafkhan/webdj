@@ -1,2 +1,2 @@
 ((nil . ((indent-tabs-mode . nil))))
-(javascript-mode . ((js-indent-level . 4)))
+(javascript-mode . ((js-indent-level . 2)))
