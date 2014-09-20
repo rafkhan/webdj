@@ -3,15 +3,72 @@
 window.onload = function() {
   'use strict';
 
-  midiDeviceLoader.getDevices()
+  midi.getDevices()
     .then(function(devices) {
       console.log(devices);
-      _.forEach(devices, function(md) {
-        console.log(md);
-        md[1].onmidimessage = function(ev) {
-          console.log(ev);
-          console.log('ayy');
-        };
+      var deviceMap = {};
+
+      for(var i = 0; i < devices.length; i++) {
+        var input = devices[i][1];
+        deviceMap[input.name] = input;
+      }
+
+      return deviceMap;
+    })
+    .then(function(deviceMap) {
+      console.log(deviceMap);
+      var mpk = deviceMap.MPKmini2;
+      midi.makeMpkMappings(mpk, {
+        pad1: {
+          up: function(ev) { console.log('1up'); },
+          down: function(ev) { console.log('1down'); },
+        },
+
+        pad2: {
+          up: function(ev) { console.log('2up'); },
+          down: function(ev) { console.log('2down'); },
+        },
+
+        pad3: {
+          up: function(ev) { console.log('3up'); },
+          down: function(ev) { console.log('3down'); },
+        },
+
+        pad4: {
+          up: function(ev) { console.log('4up'); },
+          down: function(ev) { console.log('4down'); },
+        },
+
+        pad5: {
+          up: function(ev) { console.log('5up'); },
+          down: function(ev) { console.log('5down'); },
+        },
+
+        pad6: {
+          up: function(ev) { console.log('6up'); },
+          down: function(ev) { console.log('6down'); },
+        },
+
+        pad7: {
+          up: function(ev) { console.log('7up'); },
+          down: function(ev) { console.log('7down'); },
+        },
+
+        pad8: {
+          up: function(ev) { console.log('8up'); },
+          down: function(ev) { console.log('8down'); },
+        },
+
+        knob5: function(x) { console.log(x); }
       });
-    });
+
+      /*
+      var mixtrack = deviceMap['MixTrack II'];
+      midi.makeMixtrackMappings(mixtrack, {
+        pad1: function(ev) {
+        
+        }
+      });
+      */
+    }, console.log);
 };
