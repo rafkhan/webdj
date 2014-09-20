@@ -1,7 +1,20 @@
-/* global _,console,midiDeviceLoader */
+/* global _,console,midi,track,audioManager */
 
 window.onload = function() {
   'use strict';
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    for (var i = 0; ; i++) {
+      track.add(audioManager.context, files[i]); 
+    }
+  }
+
+  document.getElementById('files').
+    addEventListener('change', handleFileSelect, false);
+
 
   midi.getDevices()
     .then(function(devices) {
