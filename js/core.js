@@ -3,8 +3,7 @@
 window.onload = function() {
   'use strict';
 
-    var audioManager = {};
-    audioManager.context = new AudioContext();
+  audioManager.initUI();
 
   function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
@@ -105,4 +104,5 @@ window.onload = function() {
   // RESIZE MIXER
   window.onresize = resize;
   resize();
+
 };
