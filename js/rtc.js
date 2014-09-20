@@ -24,24 +24,3 @@ roomFirebase.once('value', function(data) {
         connection.join(sessionDescription);
     }
 });
-
-function audioFileToBuffer(context, file) {
-    var reader = new FileReader();
-    var deferred = Q.defer();
-    var promisedValue = {};
-    reader.onload = (function(e) {
-        context.decodeAudioData(reader.result).then(
-            function(audioBuffer) {
-                promisedValue.buffer = audioBuffer;
-                id3(file, function(err, tags) {
-                    if (err) {
-                        promisedValue.err = err;
-                    }
-                    promisedValue.tags = tags;
-                    deferred.resolve(promisedValue);
-                });
-            });
-    });
-    reader.readAsArrayBuffer(file);
-    return deferred.promise;
-}
