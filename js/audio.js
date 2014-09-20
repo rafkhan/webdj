@@ -37,6 +37,38 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   };
 
 
+  function getPeaks(buffer, length) {
+    var sampleSize = buffer.length / length;
+    var sampleStep = ~~(sampleSize / 10) || 1;
+    var channels = buffer.numberOfChannels;
+    var peaks = new Float32Array(length);
+
+    for (var c = 0; c < channels; c++) {
+        var chan = buffer.getChannelData(c);
+        for (var i = 0; i < length; i++) {
+            var start = ~~(i * sampleSize);
+            var end = ~~(start + sampleSize);
+            var max = 0;
+            for (var j = start; j < end; j += sampleStep) {
+                var value = chan[j];
+                if (value > max) {
+                    max = value;
+                // faster than Math.abs
+                } else if (-value > max) {
+                    max = -value;
+                }
+            }
+            if (c == 0 || max > peaks[i]) {
+                peaks[i] = max;
+            }
+        }
+    }
+
+    return peaks;
+  }
+
+
+
   _audio.load = function(deckName, song) {
     var src = _audio.context.createBufferSource();
     src.buffer = song.buffer;
@@ -47,14 +79,19 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     src.connect(_audio.merger);
     deck[deckName] = song;
 
+    var peaks;
+
     if(deckName === 'deckA') {
       deckAName.innerHTML = song.tags.title;
       deckAArtist.innerHTML = song.tags.artist;
       deckAAlbum.innerHTML = song.tags.album;
+      peaks = getPeaks(song.buffer, 500);
+      debugger;
     } else if(deckName === 'deckB') {
       deckBName.innerHTML = song.tags.title;
       deckBArtist.innerHTML = song.tags.artist;
       deckBAlbum.innerHTML = song.tags.album;
+      peaks = getPeaks(song.buffer, 500);
     }
 
   };
@@ -64,5 +101,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
         song.src.start(0);
   };
 
+  
 })(window.audioManager = window.audioManager || {});
 
