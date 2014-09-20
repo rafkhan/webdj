@@ -20,42 +20,50 @@
     <script src="/js/core.js"></script>
   </head>
   <body>
-    <div class="deckMixerContainer">
-      <div class="deckContainer deckA">
-        <div class="deckInfoContainer">
-          <h3 id="deckAName">SONG NAME</h3>
-          <h5 id="deckAArtist">ARTIST NAME</h5>
-          <h5 id="deckAAlbum">ALBUM NAME</h5>
+    <div id="broadcaster-wrapper" style="display:none">
+      <div class="deckMixerContainer">
+        <div class="deckContainer deckA">
+          <div class="deckInfoContainer">
+            <h3 id="deckAName">SONG NAME</h3>
+            <h5 id="deckAArtist">ARTIST NAME</h5>
+            <h5 id="deckAAlbum">ALBUM NAME</h5>
+          </div>
+          <div style="width: 500px; height: 256px; background: red">
+            WOOO
+          </div>
         </div>
         <canvas id="deckACanvas" style="width: 500px; height: 256px;">
         </canvas>
       </div>
+        <div id="mixerBoardContainer">
+          <div class="mixerContainer mixerA">
+          </div>
 
-      <div id="mixerBoardContainer">
-        <div class="mixerContainer mixerA">
+          <div class="mixerContainer">
+          </div>
         </div>
 
-        <div class="mixerContainer">
+        <div id="deckB" class="deckContainer deckB">
+          <div class="deckInfoContainer">
+            <h3 id="deckBName">SONG NAME</h3>
+            <h5 id="deckBArtist">ARTIST NAME</h5>
+            <h5 id="deckBAlbum">ALBUM NAME</h5>
+          </div>
+          <div style="width: 500px; height: 256px; background: red">
+            WOOO
+          </div>
         </div>
       </div>
 
-      <div id="deckB" class="deckContainer deckB">
-        <div class="deckInfoContainer">
-          <h3 id="deckBName">SONG NAME</h3>
-          <h5 id="deckBArtist">ARTIST NAME</h5>
-          <h5 id="deckBAlbum">ALBUM NAME</h5>
-        </div>
-        <div style="width: 500px; height: 256px; background: red">
-          WOOO
-        </div>
-      </div>
+      <table class="table table-striped" id="track-table">
+        <th>
+          Load files
+          <input type="file" id="files" name="files[]" multiple />
+        </th>
+      </table>
     </div>
-
-    <table class="table table-striped" id="track-table">
-      <th>
-        Load files
-        <input type="file" id="files" name="files[]" multiple />
-      </th>
-    </table>
+    <div id="listener-wrapper" style="diplay:none">
+      Enjoy the tunes.
+    </div>
   </body>
 </html>

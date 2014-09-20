@@ -24,7 +24,7 @@
             connection.dontCaptureUserMedia = true;
 
             var newSessionDescription = connection.open();
-            console.log("opening room");
+            document.getElementById("broadcaster-wrapper").style.display = "block";
             roomFirebase.set(newSessionDescription);
             roomFirebase.onDisconnect().remove();
         } else {
@@ -32,7 +32,7 @@
             connection.session = {};
             connection.onstream = addstream;
             connection.join(sessionDescription);
-            console.log("joining room");
+            document.getElementById("listener-wrapper").style.display = "block";
         }
     });
 })(window.rtc = window.rtc || {});
