@@ -3,11 +3,14 @@
 window.onload = function() {
   'use strict';
 
+    var audioManager = {};
+    audioManager.context = new AudioContext();
+
   function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
 
     // files is a FileList of File objects. List some properties.
-    for (var i = 0; ; i++) {
+    for (var i = 0; i<files.length; i++) {
       track.add(audioManager.context, files[i]); 
     }
   }
