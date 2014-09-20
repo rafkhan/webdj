@@ -1,0 +1,32 @@
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+  padding: 0;
+}
+
+.deckContainer {
+  width: 500px;
+  height: 350px;
+  background: #DDD;
+  display: inline-block;
+}
+
+.deckContainer.deckA { float: left; }
+.deckContainer.deckB { float: right; }
+
+.deckInfoContainer {
+  height: 94px; //500 - 256
+  width: 100%;
+  padding: 5px;
+}
+
+#mixerBoardContainer {
+  display: inline-block;
+  height: 350px;
+}
+
+.mixerContainer {
+  height: 100%;
+}
+
+.mixerA {
+}

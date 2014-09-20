@@ -87,4 +87,23 @@ window.onload = function() {
       });
       */
     }, console.log);
+
+
+  var mixerDiv = document.getElementById('mixerBoardContainer');
+  var deckB = document.getElementById('deckB');
+
+  window.mixerDiv = mixerDiv;
+  
+  function resize() {
+    var pageWidth = document.clientWidth;
+    var rightBound = deckB.offsetLeft;
+    mixerDiv.style.width = (rightBound - 500) + 'px';
+    mixerDiv.style.left = 500;
+    mixerDiv.style.backgroundColor = 'black';
+    console.log('ayyy');
+  }
+
+  // RESIZE MIXER
+  window.onresize = resize;
+  resize();
 };
