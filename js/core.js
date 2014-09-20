@@ -100,7 +100,6 @@ window.onload = function() {
     mixerDiv.style.width = (rightBound - 500) + 'px';
     mixerDiv.style.left = 500;
     mixerDiv.style.backgroundColor = 'black';
-    console.log('ayyy');
   }
 
   // RESIZE MIXER
