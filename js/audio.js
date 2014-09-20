@@ -8,8 +8,11 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   _audio.context = new AudioContext();
 
   _audio.merger = _audio.context.createChannelMerger(2);
+  var dest = _audio.context.createMediaStreamDestination();
+  _audio.merger.connect(dest);
   _audio.merger.connect(_audio.context.destination);
-  connection.attachStreams.push(_audio.context.destination.stream);
+  rtc.connection.attachStreams.push(dest.stream);
+    
 
   var deck = {};
 
