@@ -26,7 +26,7 @@
     var analyser = audioManager.context.createAnalyser();
     var freqDomain = new Uint8Array(analyser.frequencyBinCount);
 
-    song.src.connect(analyser);
+    song.connect(analyser);
 
     //TODO kill
     var draw = function() {
