@@ -85,13 +85,13 @@ window.onload = function() {
       var mixtrack = deviceMap['MixTrack II'];
       midi.makeMixtrackMappings(mixtrack, {
         tableLeft: {
-          clock: function(ev) { console.log('clockwise');},
-          counter: function(ev) { console.log('counter clockwise');}
+          clock: function(ev) { audioManager.turntable('deckA', 'clock');},
+          counter: function(ev) { audioManager.turntable('deckA', 'counter');}
         },
 
         tableRight: {
-          clock: function(ev) { console.log('clockwise');},
-          counter: function(ev) { console.log('counter clockwise');}
+          clock: function(ev) { audioManager.turntable('deckB', 'clock');},
+          counter: function(ev) { audioManager.turntable('deckB', 'counter');}
         },
 
         xFader: function(ev) {

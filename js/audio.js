@@ -266,5 +266,14 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   };
 
+  _audio.turntable = function(deckName, direction) {
+      var add = -1;
+      if (direction == 'clock')
+          add = 1;
+      _audio.pause(deckName);
+      deck[deckName].offset += add;
+      _audio.play(deckName);
+  }
+
 })(window.audioManager = window.audioManager || {});
 

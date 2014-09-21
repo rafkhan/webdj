@@ -111,23 +111,23 @@
       if(ev.data[1] === 7) { mapping.rightVolume(ev); }
       if(ev.data[1] === 22) { mapping.leftVolume(ev); }
       
-      if(ev.data[1] === 93) { mapping.padA0(ev); }
-      if(ev.data[1] === 94) { mapping.padA1(ev); }
-      if(ev.data[1] === 95) { mapping.padA2(ev); }
-      if(ev.data[1] === 96) { mapping.padA3(ev); }
-      if(ev.data[1] === 86) { mapping.padA4(ev); }
-      if(ev.data[1] === 87) { mapping.padA5(ev); }
-      if(ev.data[1] === 88) { mapping.padA6(ev); }
-      if(ev.data[1] === 100) { mapping.padA7(ev); }
+      if(ev.data[1] === 89) { mapping.padA0(ev); }
+      if(ev.data[1] === 90) { mapping.padA1(ev); }
+      if(ev.data[1] === 91) { mapping.padA2(ev); }
+      if(ev.data[1] === 92) { mapping.padA3(ev); }
+      if(ev.data[1] === 83) { mapping.padA4(ev); }
+      if(ev.data[1] === 84) { mapping.padA5(ev); }
+      if(ev.data[1] === 85) { mapping.padA6(ev); }
+      if(ev.data[1] === 99) { mapping.padA7(ev); }
 
-      if(ev.data[1] === 89) { mapping.padB0(ev); }
-      if(ev.data[1] === 90) { mapping.padB1(ev); }
-      if(ev.data[1] === 91) { mapping.padB2(ev); }
-      if(ev.data[1] === 92) { mapping.padB3(ev); }
-      if(ev.data[1] === 83) { mapping.padB4(ev); }
-      if(ev.data[1] === 84) { mapping.padB5(ev); }
-      if(ev.data[1] === 85) { mapping.padB6(ev); }
-      if(ev.data[1] === 99) { mapping.padB7(ev); }
+      if(ev.data[1] === 93) { mapping.padB0(ev); }
+      if(ev.data[1] === 94) { mapping.padB1(ev); }
+      if(ev.data[1] === 95) { mapping.padB2(ev); }
+      if(ev.data[1] === 96) { mapping.padB3(ev); }
+      if(ev.data[1] === 86) { mapping.padB4(ev); }
+      if(ev.data[1] === 87) { mapping.padB5(ev); }
+      if(ev.data[1] === 88) { mapping.padB6(ev); }
+      if(ev.data[1] === 100) { mapping.padB7(ev); }
     };
   };  
 
