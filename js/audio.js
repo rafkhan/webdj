@@ -153,6 +153,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.play = function(deckName) {
     var song = deck[deckName];
+    if (song == undefined) return;
 
     var canvas;
     if(deckName === 'deckA') {
@@ -177,8 +178,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var songB = deck.deckB;
     var bLen  = songB.nodeChain.length;
 
-    songA.nodeChain[aLen - 2].gain.value = gain2;
-    songB.nodeChain[bLen - 2].gain.value = gain1;
+    if (songA != undefined)
+      songA.nodeChain[aLen - 2].gain.value = gain2;
+    if (songB != undefined)
+      songB.nodeChain[bLen - 2].gain.value = gain1;
   };
 
   _audio.pause = function(deckName) {
@@ -201,6 +204,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.seek = function(deckName, offset) {
       var song = deck[deckName];
+      if (song == undefined) return;
       freshSource(song);
       var canvas = deckAVisCanvas;
       if (deckName === 'deckB') {
