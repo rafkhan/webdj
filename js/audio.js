@@ -99,7 +99,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     song.nodeChain = [];
     song.nodeChain.push(song.src);
 
-
     var deckGain = _audio.context.createGain();
     song.nodeChain.push(deckGain);
     deckGain.gain.value = 1.0;
@@ -113,8 +112,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       song.nodeChain[i-1].connect(song.nodeChain[i]);
     }
 
-
-
     deck[deckName] = song;
 
     var peaks;
@@ -124,7 +121,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       deckAArtist.innerHTML = song.tags.artist;
       deckAAlbum.innerHTML = song.tags.album;
       deckACanvas.onclick = function(e) {
-          var x = e.pageX;
+          var x;
+          if (e.pageX)
+              x = e.pageX - deckACanvas.offsetLeft;
+          else
+              x = e.x;
+          console.log("clicked at pos "+e.x);
           _audio.seek('deckA', (x/deckACanvas.width)*song.buffer.duration);
       }
       peaks = getPeaks(song.buffer, 500);
@@ -179,9 +181,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     songB.nodeChain[bLen - 2].gain.value = gain2;
   };
 
-  _audio.pause = function(deckName) {
-      //song.src
-  };
+  // _audio.pause = function(deckName) {
+  //     var song = deck[deckName];
+  //     freshSource(song);
+  // };
 
   _audio.stop = function(deckName) {
       var song = deck[deckName];
@@ -191,7 +194,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   _audio.seek = function(deckName, offset) {
       var song = deck[deckName];
       freshSource(song);
-      console.log("FUCKING SEEK "+offset);
+      var canvas = deckAVisCanvas;
+      if (deckName === 'deckB')
+          canvas = deckBVisCanvas;
+      requestAnimationFrame(waveGrapher.getVisualizerCb(song, canvas));
       song.src.start(0, offset);
   }
   
