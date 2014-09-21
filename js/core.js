@@ -31,7 +31,6 @@ window.onload = function() {
       return deviceMap;
     })
     .then(function(deviceMap) {
-      console.log(deviceMap);
       var mpk = deviceMap.MPKmini2;
       midi.makeMpkMappings(mpk, {
         pad1: {
@@ -77,14 +76,20 @@ window.onload = function() {
         knob5: function(x) { console.log(x); }
       });
 
-      /*
       var mixtrack = deviceMap['MixTrack II'];
       midi.makeMixtrackMappings(mixtrack, {
-        pad1: function(ev) {
-        
-        }
+        tableLeft: {
+          clock: function(ev) { console.log('clockwise');},
+          counter: function(ev) { console.log('counter clockwise');}
+        },
+
+        tableRight: {
+          clock: function(ev) { console.log('clockwise');},
+          counter: function(ev) { console.log('counter clockwise');}
+        },
+
+        xFader: function(ev) { console.log(ev.data[2]); }
       });
-      */
     }, console.log);
 
 
@@ -98,11 +103,8 @@ window.onload = function() {
     var rightBound = deckB.offsetLeft;
     mixerDiv.style.width = (rightBound - 500) + 'px';
     mixerDiv.style.left = 500;
-    mixerDiv.style.backgroundColor = 'black';
   }
 
   // RESIZE MIXER
   window.onresize = resize;
-  resize();
-
 };

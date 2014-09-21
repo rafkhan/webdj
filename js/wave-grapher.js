@@ -15,7 +15,6 @@
     for(var i = 0; i < len; i++) {
       var height = HEIGHT * peaks[i];
       var top = HEIGHT - height;
-      console.log(top);
       ctx.fillRect(i, top, 1, height);
     }
   };
@@ -25,7 +24,7 @@
     var WIDTH = canvas.width;
     var drawContext = canvas.getContext('2d');
     var analyser = audioManager.context.createAnalyser();
-    var freqDomain = new Uint8Array(analyser.frequencyBinCount);    
+    var freqDomain = new Uint8Array(analyser.frequencyBinCount);
 
     song.src.connect(analyser);
 
