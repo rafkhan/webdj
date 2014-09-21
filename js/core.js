@@ -73,7 +73,13 @@ window.onload = function() {
           down: function(ev) { console.log('8down'); },
         },
 
-        knob5: function(x) { console.log(x); }
+        knob5: function(val) {
+          audioManager.lowPass('deckB', val);
+        },
+
+        knob1: function(val) {
+          audioManager.lowPass('deckA', val);
+        }
       });
 
       var mixtrack = deviceMap['MixTrack II'];

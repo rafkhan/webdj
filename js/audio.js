@@ -108,6 +108,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     song.nodeChain = [];
     song.nodeChain.push(song.src);
 
+    _audio.lmax = _audio.context.sampleRate / 2;
+    var lowpass = _audio.context.createBiquadFilter();
+    lowpass.type = 0;
+    lowpass.frequency.value = _audio.lmax;
+    song.nodeChain.push(lowpass);
+
     var deckGain = _audio.context.createGain();
     song.nodeChain.push(deckGain);
     deckGain.gain.value = 1.0;
@@ -181,16 +187,22 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
     var songA = deck.deckA;
     var aLen, bLen;
-    if (songA != undefined)
+    if (songA !== undefined) {
       aLen = songA.nodeChain.length;
-    var songB = deck.deckB;
-    if (songB != undefined)
-      bLen  = songB.nodeChain.length;
+    }
 
-    if (songA != undefined)
+    var songB = deck.deckB;
+    if (songB !== undefined) {
+      bLen  = songB.nodeChain.length;
+    }
+
+    if (songA !== undefined) {
       songA.nodeChain[aLen - 2].gain.value = gain2;
-    if (songB != undefined)
+    }
+
+    if (songB !== undefined) {
       songB.nodeChain[bLen - 2].gain.value = gain1;
+    }
   };
 
   _audio.pause = function(deckName) {
@@ -244,6 +256,14 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.removeCue = function(deckName, index) {
       deck[deckName].cues[index] = null;
+  };
+
+  _audio.lowPass = function(deckName, val) {
+    var song = deck[deckName];
+    if (song === undefined) return;
+    song.nodeChain[song.nodeChain.length - 4]
+      .frequency.value = (val / 127) * _audio.lmax;
+
   };
 
 })(window.audioManager = window.audioManager || {});

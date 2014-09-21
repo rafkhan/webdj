@@ -63,6 +63,7 @@
       mapUpDown(51, 'pad8', ev);
 
       onKnobUpdate(5, 'knob5', ev);
+      onKnobUpdate(1, 'knob1', ev);
     };
   };
 
