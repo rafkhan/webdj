@@ -3,6 +3,8 @@
 window.onload = function() {
   'use strict';
 
+   var fordBuffers = [];
+
   audioManager.initUI();
 
   function handleFileSelect(evt) {

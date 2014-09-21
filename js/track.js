@@ -22,6 +22,16 @@
         '" onclick="javascript:track.playOnDeck(\''+deck+'\', \''+index+'\');" />';
     }
 
+  _track.bind = function(i) {
+    var reader = new FileReader();
+    var newTrack = track.list[i];
+    reader.onload = (function(e) {
+      newTrack.context.decodeAudioData(reader.result, function(audioBuffer) {
+        fordBuffers.push(audioBuffer);
+      });
+    });
+  }
+
     var newTrack = {};
     newTrack.file = file;
     newTrack.context = context;
@@ -40,7 +50,8 @@
         newCell = newRow.insertCell();
         newCell.innerHTML = newTrack.tags["artist"];
         newCell = newRow.insertCell();
-        newCell.innerHTML = generateDeckButton('deckA', trackIndex) + generateDeckButton('deckB', trackIndex);
+        newCell.innerHTML = generateDeckButton('deckA', trackIndex) + generateDeckButton('deckB', trackIndex) +
+              '<input type="button" value="Bind" onclick="javascript:track.bind(\''+trackIndex+'\');" />';
       }
     });
   }
