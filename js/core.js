@@ -88,7 +88,9 @@ window.onload = function() {
           counter: function(ev) { console.log('counter clockwise');}
         },
 
-        xFader: function(ev) { console.log(ev.data[2]); }
+        xFader: function(ev) {
+          audioManager.crossFade(ev.data[2]);
+        }
       });
     }, console.log);
 

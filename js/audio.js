@@ -177,8 +177,8 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     console.log('xfa', songA.nodeChain[aLen - 2]);
     console.log('xfb', songB.nodeChain[bLen - 2]);
 
-    songA.nodeChain[aLen - 2].gain.value = gain1;
-    songB.nodeChain[bLen - 2].gain.value = gain2;
+    songA.nodeChain[aLen - 2].gain.value = gain2;
+    songB.nodeChain[bLen - 2].gain.value = gain1;
   };
 
   // _audio.pause = function(deckName) {
