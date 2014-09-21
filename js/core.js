@@ -56,7 +56,13 @@ window.onload = function() {
         },
 
         key1: fordSample(0),
-        key2: fordSample(1)
+        key2: fordSample(1),
+        key3: fordSample(2),
+        key4: fordSample(3),
+        key5: fordSample(4),
+        key6: fordSample(5),
+        key7: fordSample(6),
+        key8: fordSample(7)
       });
 
       var mixtrack = deviceMap['MixTrack II'];

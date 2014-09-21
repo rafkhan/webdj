@@ -58,6 +58,8 @@
     
     }
 
+
+
     mpk.onmidimessage = function(ev) {
       console.log(ev.data);
       /*
@@ -73,6 +75,12 @@
 
       mapUpDown(48, 'key1', ev);
       mapUpDown(50, 'key2', ev);
+      mapUpDown(52, 'key3', ev);
+      mapUpDown(53, 'key4', ev);
+      mapUpDown(55, 'key5', ev);
+      mapUpDown(57, 'key6', ev);
+      mapUpDown(59, 'key7', ev);
+      mapUpDown(60, 'key8', ev);
 
       onKnobUpdate(5, 'knob5', ev);
       onKnobUpdate(1, 'knob1', ev);
