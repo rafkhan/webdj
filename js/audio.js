@@ -85,8 +85,11 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   }
 
   function freshSource(song) {
-    song.src.stop();
-    song.src.disconnect();
+    try {
+      song.src.stop();
+      song.src.disconnect();
+    } catch(ex) {}
+
     song.src = _audio.context.createBufferSource();
     song.src.buffer = song.buffer;
     song.src.connect(song.nodeChain[1]);
@@ -95,6 +98,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   _audio.load = function(deckName, song) {
     song.src = _audio.context.createBufferSource();
     song.src.buffer = song.buffer;
+    song.nodeChain = [];
     song.nodeChain.push(song.src);
 
 
