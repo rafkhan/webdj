@@ -135,7 +135,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
               x = e.pageX - deckACanvas.offsetLeft;
           else
               x = e.x;
-          console.log("clicked at pos "+e.x);
           _audio.seek('deckA', (x/deckACanvas.width)*song.buffer.duration);
       }
       peaks = getPeaks(song.buffer, 500);
@@ -145,8 +144,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       deckBArtist.innerHTML = song.tags.artist;
       deckBAlbum.innerHTML = song.tags.album;
       deckBCanvas.onclick = function(e) {
-          var x = e.pageX;
-          _audio.seek('deckB', (x/deckBCanvas.width)*song.buffer.duration);
+       var x;
+          if (e.pageX)
+              x = e.pageX - deckBCanvas.offsetLeft;
+          else
+              x = e.x;
+          _audio.seek('deckA', (x/deckBCanvas.width)*song.buffer.duration);
       }
       peaks = getPeaks(song.buffer, 500);
       waveGrapher.draw(deckBDrawCtx, peaks);
@@ -165,7 +168,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       canvas = deckBVisCanvas;
     }
 
-    requestAnimationFrame(waveGrapher.getVisualizerCb(song.nodeChain[song.nodeChain.length - 1], canvas));
+    requestAnimationFrame(waveGrapher.getVisualizerCb(song.nodeChain[song.nodeChain.length - 2], canvas));
     song.starttime = new Date(((new Date().getTime()/1000) - song.offset)*1000);
     song.src.start(0, song.offset);
   };
@@ -215,10 +218,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       var song = deck[deckName];
       if (song == undefined) return;
       freshSource(song);
-      var canvas = deckAVisCanvas;
-      if (deckName === 'deckB') {
-        canvas = deckBVisCanvas;
-      }
+
       song.starttime = new Date(((new Date().getTime()/1000) - offset)*1000);
       song.src.start(0, offset);
   };
