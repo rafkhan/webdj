@@ -90,6 +90,9 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   }
 
   function freshSource(song) {
+    if (!song.starttime)
+        return;
+    song.starttime = null;
     song.src.stop();
     song.src.disconnect();
 
@@ -163,7 +166,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     }
 
     requestAnimationFrame(waveGrapher.getVisualizerCb(song.nodeChain[song.nodeChain.length - 1], canvas));
-    song.starttime = new Date();
+    song.starttime = new Date(((new Date().getTime()/1000) - song.offset)*1000);
     song.src.start(0, song.offset);
   };
 
@@ -189,6 +192,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.pause = function(deckName) {
       var song = deck[deckName];
+      if (!song.starttime) return;
       song.offset = (new Date().getTime() - song.starttime.getTime()) / 1000;
       freshSource(song);
   };
@@ -203,6 +207,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.stop = function(deckName) {
       var song = deck[deckName];
+      song.offset = 0;
       freshSource(song);
   };
 
@@ -214,13 +219,17 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       if (deckName === 'deckB') {
         canvas = deckBVisCanvas;
       }
+      song.starttime = new Date(((new Date().getTime()/1000) - offset)*1000);
       song.src.start(0, offset);
   };
   
   _audio.setCue = function(deckName, index) {
       var song = deck[deckName];
 
-      song.cues[index] = ((new Date().getTime() - song.starttime.getTime())/1000);
+      if (song.starttime)
+          song.cues[index] = ((new Date().getTime() - song.starttime.getTime())/1000);
+      else
+          song.cues[index] = song.offset;
       return false;
   };
 
