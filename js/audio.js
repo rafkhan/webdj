@@ -166,7 +166,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     }
 
     requestAnimationFrame(waveGrapher.getVisualizerCb(song.nodeChain[song.nodeChain.length - 1], canvas));
-    song.starttime = new Date();
+    song.starttime = new Date(((new Date().getTime()/1000) - song.offset)*1000);
     song.src.start(0, song.offset);
   };
 
@@ -219,7 +219,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       if (deckName === 'deckB') {
         canvas = deckBVisCanvas;
       }
-      song.starttime = new Date();
+      song.starttime = new Date(((new Date().getTime()/1000) - offset)*1000);
       song.src.start(0, offset);
   };
   
