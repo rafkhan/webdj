@@ -128,13 +128,15 @@ window.onload = function() {
   var shiftIsDown = false;
 
   function makeCueHandler(deckName, index) {
-      return function(ev) {
-          var offset;
-          if (shiftIsDown)
-            audioManager.removeCue(deckName, index);
-          else if ((offset = audioManager.getCue(deckName, index)))
-            audioManager.seek(deckName, offset);
+    return function(ev) {
+      if(ev.data[2] > 0) {
+        var offset;
+        if (shiftIsDown)
+          audioManager.removeCue(deckName, index);
+        else if ((offset = audioManager.getCue(deckName, index)))
+          audioManager.seek(deckName, offset);
       }
+    }
   }
 
   window.mixerDiv = mixerDiv;
