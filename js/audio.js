@@ -210,5 +210,20 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       song.src.start(0, offset);
   }
   
+  _audio.setCue(deckName) {
+      var song = deck[deckName];
+      if (song.cues == undefined)
+          song.cues = [];
+      song.cues.push((new Date().getTime() - song.starttime.getTime())/1000);
+  }
+
+  _audio.getCue(deckName, index) {
+      return deck[deckName].cues[index] ? deck[deckName].cues[index] : null;
+  }
+
+  _audio.removeCue(deckName, index) {
+      deck[deckName].cues[index] = null;
+  }
+
 })(window.audioManager = window.audioManager || {});
 
