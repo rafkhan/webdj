@@ -62,6 +62,9 @@
       mapUpDown(50, 'pad7', ev);
       mapUpDown(51, 'pad8', ev);
 
+      mapUpDown(60, 'mC', ev);
+      mapUpDown(62, 'mD', ev);
+
       onKnobUpdate(5, 'knob5', ev);
       onKnobUpdate(1, 'knob1', ev);
     };

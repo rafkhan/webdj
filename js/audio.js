@@ -163,7 +163,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   };
 
-  _audio.play = function(deckName) {
+  _audio.play = function(deckName, reqAnim) {
     var song = deck[deckName];
     if (song == undefined) return;
 
@@ -174,7 +174,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       canvas = deckBVisCanvas;
     }
 
-    requestAnimationFrame(waveGrapher.getVisualizerCb(song.nodeChain[song.nodeChain.length - 2], canvas));
+    if(!reqAnim) {
+      requestAnimationFrame(waveGrapher.getVisualizerCb(song.nodeChain[song.nodeChain.length - 2], canvas));
+    }
+
     song.starttime = new Date(((new Date().getTime()/1000) - song.offset)*1000);
     song.src.start(0, song.offset);
   };
@@ -267,13 +270,16 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   };
 
   _audio.turntable = function(deckName, direction) {
-      var add = -1;
-      if (direction == 'clock')
-          add = 1;
+    /*
+      var add = -60;
+      if (direction == 'clock') {
+        add = 60;
+      }
       _audio.pause(deckName);
       deck[deckName].offset += add;
-      _audio.play(deckName);
-  }
+      _audio.play(deckName, true);
+      */
+  };
 
 })(window.audioManager = window.audioManager || {});
 
