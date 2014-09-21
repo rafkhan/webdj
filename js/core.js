@@ -3,7 +3,7 @@
 window.onload = function() {
   'use strict';
 
-   var fordBuffers = [];
+  window.fordBuffers = [];
 
   audioManager.initUI();
 
@@ -26,6 +26,7 @@ window.onload = function() {
         console.log('qwe');
         var src = audioManager.context.createBufferSource();
         src.buffer = fordBuffers[idx];
+        src.connect(audioManager.merger);
         src.start(0);
       }
     };

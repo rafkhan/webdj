@@ -16,21 +16,24 @@
     reader.readAsArrayBuffer(newTrack.file);
   }
 
+  _track.bind = function(i) {
+    console.log('asd');
+    var reader = new FileReader();
+    var newTrack = track.list[i];
+    reader.onload = (function(e) {
+      newTrack.context.decodeAudioData(reader.result, function(audioBuffer) {
+        window.fordBuffers.push(audioBuffer);
+        console.log(audioBuffer);
+      });
+    });
+    reader.readAsArrayBuffer(newTrack.file);
+  };
+
   _track.add = function(context, file) {
     function generateDeckButton(deck, index) {
       return '<input type="button" value="Load on '+deck+
         '" onclick="javascript:track.playOnDeck(\''+deck+'\', \''+index+'\');" />';
     }
-
-  _track.bind = function(i) {
-    var reader = new FileReader();
-    var newTrack = track.list[i];
-    reader.onload = (function(e) {
-      newTrack.context.decodeAudioData(reader.result, function(audioBuffer) {
-        fordBuffers.push(audioBuffer);
-      });
-    });
-  }
 
     var newTrack = {};
     newTrack.file = file;
