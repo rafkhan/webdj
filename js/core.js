@@ -19,6 +19,17 @@ window.onload = function() {
   document.getElementById('files').
     addEventListener('change', handleFileSelect, false);
 
+  function fordSample(idx) {
+    return {
+      up: function() {},
+      down: function() {
+        console.log('qwe');
+        var src = audioManager.context.createBufferSource();
+        src.buffer = fordBuffers[idx];
+        src.start(0);
+      }
+    };
+  }
 
   midi.getDevices()
     .then(function(devices) {
@@ -35,53 +46,16 @@ window.onload = function() {
     .then(function(deviceMap) {
       var mpk = deviceMap.MPKmini2;
       midi.makeMpkMappings(mpk, {
-        pad1: {
-          up: function(ev) { console.log('1up'); },
-          down: function(ev) { console.log('1down'); },
-        },
-
-        pad2: {
-          up: function(ev) { console.log('2up'); },
-          down: function(ev) { console.log('2down'); },
-        },
-
-        pad3: {
-          up: function(ev) { console.log('3up'); },
-          down: function(ev) { console.log('3down'); },
-        },
-
-        pad4: {
-          up: function(ev) { console.log('4up'); },
-          down: function(ev) { console.log('4down'); },
-        },
-
-        pad5: {
-          up: function(ev) { console.log('5up'); },
-          down: function(ev) { console.log('5down'); },
-        },
-
-        pad6: {
-          up: function(ev) { console.log('6up'); },
-          down: function(ev) { console.log('6down'); },
-        },
-
-        pad7: {
-          up: function(ev) { console.log('7up'); },
-          down: function(ev) { console.log('7down'); },
-        },
-
-        pad8: {
-          up: function(ev) { console.log('8up'); },
-          down: function(ev) { console.log('8down'); },
-        },
-
         knob5: function(val) {
           audioManager.lowPass('deckB', val);
         },
 
         knob1: function(val) {
           audioManager.lowPass('deckA', val);
-        }
+        },
+
+        key1: fordSample(0),
+        key2: fordSample(1)
       });
 
       var mixtrack = deviceMap['MixTrack II'];

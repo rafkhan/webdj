@@ -3,6 +3,7 @@
 (function(_midi) {
   'use strict';
 
+
   function getMidiSuccessCallback(deferred) {
     return function(midiAccess) {
       var inputMap = midiAccess.inputs;
@@ -45,14 +46,21 @@
       }
     }
 
+    console.log('AYYY');
+
     function onKnobUpdate(key, knob, ev) {
       if(ev.data[1] === key) {
         mapping[knob](ev.data[2]);
       }
     }
 
+    function onPiano(key, ev, cb) {
+    
+    }
+
     mpk.onmidimessage = function(ev) {
-      console.log(ev.data[1]);
+      console.log(ev.data);
+      /*
       mapUpDown(44, 'pad1', ev);
       mapUpDown(45, 'pad2', ev);
       mapUpDown(46, 'pad3', ev);
@@ -61,12 +69,14 @@
       mapUpDown(49, 'pad6', ev);
       mapUpDown(50, 'pad7', ev);
       mapUpDown(51, 'pad8', ev);
+      */
 
-      mapUpDown(60, 'mC', ev);
-      mapUpDown(62, 'mD', ev);
+      mapUpDown(48, 'key1', ev);
+      mapUpDown(50, 'key2', ev);
 
       onKnobUpdate(5, 'knob5', ev);
       onKnobUpdate(1, 'knob1', ev);
+
     };
   };
 
@@ -131,6 +141,8 @@
       if(ev.data[1] === 87) { mapping.padB5(ev); }
       if(ev.data[1] === 88) { mapping.padB6(ev); }
       if(ev.data[1] === 100) { mapping.padB7(ev); }
+
+      
     };
   };  
 
