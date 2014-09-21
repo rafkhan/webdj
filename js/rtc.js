@@ -2,7 +2,7 @@
 
     _rtc.connection = new RTCMultiConnection();
     var connection = _rtc.connection;
-    connection.firebase = "webdjrooms";
+    connection.firebase = "webdjrooms-test";
 
     var roomid = window.location.pathname.replace(".", "").replace("/", "");
     var firebaseURL = "https://" + connection.firebase + ".firebaseio.com/";

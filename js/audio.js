@@ -33,6 +33,8 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   var deckBVisCanvas;
   var deckBDrawCtx;
 
+  var nodeChain = [];
+
   _audio.initUI = function() {
     console.log('x');
     deckAName = document.getElementById('deckAName');
@@ -91,9 +93,32 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     src.buffer = song.buffer;
     song.src = src;
 
-    //TODO hook up effects and volume
-    
-    src.connect(_audio.merger);
+    nodeChain.push(src);
+
+    var lowbandpass = _audio.context.createBiquadFilter();
+    var midbandpass = _audio.context.createBiquadFilter();
+    var hibandpass = _audio.context.createBiquadFilter();
+    nodeChain.push(lowbandpass);
+    nodeChain.push(midbandpass);
+    nodeChain.push(hibandpass);
+
+    var masterGain = _audio.context.createGain();
+    nodeChain.push(masterGain);
+
+    nodeChain.push(_audio.merger);
+
+    for (var i=1;i<nodeChain.length;i++) {
+      console.log(nodeChain[i-1], nodeChain[i]);
+      nodeChain[i-1].connect(nodeChain[i]);
+    }
+
+    lowbandpass.type = midbandpass.type = hibandpass.type = "bandpass";
+    lowbandpass.Q.value = midbandpass.Q.value = hibandpass.Q.value = 0.707;
+    lowbandpass.frequency.value = 100;
+    midbandpass.frequency.value = 1000;
+    hibandpass.frequency.value = 10000;
+    masterGain.gain.value = 1.0;
+
     deck[deckName] = song;
 
     var peaks;
