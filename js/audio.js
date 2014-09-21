@@ -34,7 +34,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   var deckBDrawCtx;
 
   _audio.initUI = function() {
-    console.log('x');
     deckAName = document.getElementById('deckAName');
     deckAArtist = document.getElementById('deckAArtist');
     deckAAlbum = document.getElementById('deckAAlbum');
@@ -167,12 +166,8 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     song.src.start(0, song.offset);
   };
 
-  _audio.updateDeckVolume = function(deck, val) {
-    
-  };
-
   _audio.crossFade = function(val) {
-    var x = parseInt(val) / parseInt(127);
+    var x = val / 127;
     // Use an equal-power crossfading curve:
     var gain1 = Math.cos(x * 0.5*Math.PI);
     var gain2 = Math.cos((1.0 - x) * 0.5*Math.PI);
@@ -181,9 +176,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var aLen  = songA.nodeChain.length;
     var songB = deck.deckB;
     var bLen  = songB.nodeChain.length;
-
-    console.log('xfa', songA.nodeChain[aLen - 2]);
-    console.log('xfb', songB.nodeChain[bLen - 2]);
 
     songA.nodeChain[aLen - 2].gain.value = gain2;
     songB.nodeChain[bLen - 2].gain.value = gain1;
@@ -194,6 +186,13 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       song.offset = (new Date().getTime() - song.starttime.getTime()) / 1000;
       freshSource(song);
   };
+  
+  _audio.adjustVolume = function(deckName, val) {
+    var song = deck[deckName];
+    song.nodeChain[song.nodeChain.length - 3]
+      .gain.value = val / 127;
+  };
+
 
   _audio.stop = function(deckName) {
       var song = deck[deckName];
@@ -204,27 +203,31 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       var song = deck[deckName];
       freshSource(song);
       var canvas = deckAVisCanvas;
-      if (deckName === 'deckB')
-          canvas = deckBVisCanvas;
+      if (deckName === 'deckB') {
+        canvas = deckBVisCanvas;
+      }
       requestAnimationFrame(waveGrapher.getVisualizerCb(song, canvas));
       song.src.start(0, offset);
-  }
+  };
   
-  _audio.setCue(deckName, index) {
+  _audio.setCue = function(deckName, index) {
       var song = deck[deckName];
-      if (song.cues == undefined)
-          song.cues = [null, null, null, null, null, null, null, null];
-      song.cues[i] = ((new Date().getTime() - song.starttime.getTime())/1000);
+
+      song.cues[index] = ((new Date().getTime() - song.starttime.getTime())/1000);
       return false;
-  }
+  };
 
-  _audio.getCue(deckName, index) {
-      return deck[deckName].cues[index] ? deck[deckName].cues[index] : setCue(deckName, index);
-  }
+  _audio.getCue = function(deckName, index) {
+    deck[deckName].cues = deck[deckName].cues ||
+        [null, null, null, null, null, null, null, null];
 
-  _audio.removeCue(deckName, index) {
+    return deck[deckName].cues[index] ?
+      deck[deckName].cues[index] : _audio.setCue(deckName, index);
+  };
+
+  _audio.removeCue = function(deckName, index) {
       deck[deckName].cues[index] = null;
-  }
+  };
 
 })(window.audioManager = window.audioManager || {});
 

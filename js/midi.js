@@ -52,7 +52,7 @@
     }
 
     mpk.onmidimessage = function(ev) {
-      console.log(ev.data);
+      console.log(ev.data[1]);
       mapUpDown(44, 'pad1', ev);
       mapUpDown(45, 'pad2', ev);
       mapUpDown(46, 'pad3', ev);
@@ -86,6 +86,8 @@
 
     mixtrack.onmidimessage = function(ev) {
 
+      console.log(ev.data[1]);
+
       // TABLES
       if(ev.data[1] === 24) {
         if(ev.data[2] < 20) {
@@ -105,7 +107,26 @@
 
       // XFADER
       if(ev.data[1] === 10) { mapping.xFader(ev); }
+      if(ev.data[1] === 7) { mapping.rightVolume(ev); }
+      if(ev.data[1] === 22) { mapping.leftVolume(ev); }
+      
+      if(ev.data[1] === 93) { mapping.padA0(ev); }
+      if(ev.data[1] === 94) { mapping.padA1(ev); }
+      if(ev.data[1] === 95) { mapping.padA2(ev); }
+      if(ev.data[1] === 96) { mapping.padA3(ev); }
+      if(ev.data[1] === 86) { mapping.padA4(ev); }
+      if(ev.data[1] === 87) { mapping.padA5(ev); }
+      if(ev.data[1] === 88) { mapping.padA6(ev); }
+      if(ev.data[1] === 100) { mapping.padA7(ev); }
 
+      if(ev.data[1] === 89) { mapping.padB0(ev); }
+      if(ev.data[1] === 90) { mapping.padB1(ev); }
+      if(ev.data[1] === 91) { mapping.padB2(ev); }
+      if(ev.data[1] === 92) { mapping.padB3(ev); }
+      if(ev.data[1] === 83) { mapping.padB4(ev); }
+      if(ev.data[1] === 84) { mapping.padB5(ev); }
+      if(ev.data[1] === 85) { mapping.padB6(ev); }
+      if(ev.data[1] === 99) { mapping.padB7(ev); }
     };
   };  
 

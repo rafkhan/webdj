@@ -90,7 +90,35 @@ window.onload = function() {
 
         xFader: function(ev) {
           audioManager.crossFade(ev.data[2]);
-        }
+        },
+
+        rightVolume: function(ev) {
+          audioManager.adjustVolume('deckB', ev.data[2]);
+        },
+
+        leftVolume: function(ev) {
+          audioManager.adjustVolume('deckA', ev.data[2]);
+        },
+
+        padA0: makeCueHandler('deckA', 0),
+        padA1: makeCueHandler('deckA', 1),
+        padA2: makeCueHandler('deckA', 2),
+        padA3: makeCueHandler('deckA', 3),
+        padA4: makeCueHandler('deckA', 4),
+        padA5: makeCueHandler('deckA', 5),
+        padA6: makeCueHandler('deckA', 6),
+        padA7: makeCueHandler('deckA', 7),
+
+          
+        padB0: makeCueHandler('deckB', 0),
+        padB1: makeCueHandler('deckB', 1),
+        padB2: makeCueHandler('deckB', 2),
+        padB3: makeCueHandler('deckB', 3),
+        padB4: makeCueHandler('deckB', 4),
+        padB5: makeCueHandler('deckB', 5),
+        padB6: makeCueHandler('deckB', 6),
+        padB7: makeCueHandler('deckB', 7)
+
       });
     }, console.log);
 
