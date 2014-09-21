@@ -210,15 +210,16 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       song.src.start(0, offset);
   }
   
-  _audio.setCue(deckName) {
+  _audio.setCue(deckName, index) {
       var song = deck[deckName];
       if (song.cues == undefined)
-          song.cues = [];
-      song.cues.push((new Date().getTime() - song.starttime.getTime())/1000);
+          song.cues = [null, null, null, null, null, null, null, null];
+      song.cues[i] = ((new Date().getTime() - song.starttime.getTime())/1000);
+      return false;
   }
 
   _audio.getCue(deckName, index) {
-      return deck[deckName].cues[index] ? deck[deckName].cues[index] : null;
+      return deck[deckName].cues[index] ? deck[deckName].cues[index] : setCue(deckName, index);
   }
 
   _audio.removeCue(deckName, index) {
