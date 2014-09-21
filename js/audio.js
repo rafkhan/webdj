@@ -90,6 +90,9 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   }
 
   function freshSource(song) {
+    if (!song.starttime)
+        return;
+    song.starttime = null;
     song.src.stop();
     song.src.disconnect();
 
@@ -189,6 +192,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.pause = function(deckName) {
       var song = deck[deckName];
+      if (!song.starttime) return;
       song.offset = (new Date().getTime() - song.starttime.getTime()) / 1000;
       freshSource(song);
   };
@@ -203,6 +207,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.stop = function(deckName) {
       var song = deck[deckName];
+      song.offset = 0;
       freshSource(song);
   };
 
@@ -215,13 +220,17 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
         canvas = deckBVisCanvas;
       }
       requestAnimationFrame(waveGrapher.getVisualizerCb(song, canvas));
+      song.starttime = new Date();
       song.src.start(0, offset);
   };
   
   _audio.setCue = function(deckName, index) {
       var song = deck[deckName];
 
-      song.cues[index] = ((new Date().getTime() - song.starttime.getTime())/1000);
+      if (song.starttime)
+          song.cues[index] = ((new Date().getTime() - song.starttime.getTime())/1000);
+      else
+          song.cues[index] = song.offset;
       return false;
   };
 
