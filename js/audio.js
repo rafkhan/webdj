@@ -26,8 +26,11 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   var deckBAlbum;
 
   var deckACanvas;
-  var deckBCanvas;
+  var deckAVisCanvas;
   var deckADrawCtx;
+
+  var deckBCanvas;
+  var deckBVisCanvas;
   var deckBDrawCtx;
 
   _audio.initUI = function() {
@@ -45,6 +48,9 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
     deckBCanvas = document.getElementById('deckBCanvas');
     deckBDrawCtx = deckBCanvas.getContext('2d');
+
+    deckAVisCanvas = document.getElementById('deckAVisCanvas');
+    deckBVisCanvas = document.getElementById('deckBVisCanvas');
   };
 
 
@@ -97,18 +103,29 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       deckAArtist.innerHTML = song.tags.artist;
       deckAAlbum.innerHTML = song.tags.album;
       peaks = getPeaks(song.buffer, 500);
+      waveGrapher.draw(deckADrawCtx, peaks);
     } else if(deckName === 'deckB') {
       deckBName.innerHTML = song.tags.title;
       deckBArtist.innerHTML = song.tags.artist;
       deckBAlbum.innerHTML = song.tags.album;
       peaks = getPeaks(song.buffer, 500);
+      waveGrapher.draw(deckBDrawCtx, peaks);
     }
 
   };
 
   _audio.play = function(deckName) {
     var song = deck[deckName];
-        song.src.start(0);
+
+    var canvas;
+    if(deckName === 'deckA') {
+      canvas = deckAVisCanvas;
+    } else if(deckName === 'deckB') {
+      canvas = deckBVisCanvas;
+    }
+
+    requestAnimationFrame(waveGrapher.getVisualizerCb(song, canvas));
+    song.src.start(0);
   };
 
   

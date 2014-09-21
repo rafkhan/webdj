@@ -15,8 +15,9 @@
     <script src="/js/midi.js"></script>
     <script src="/js/rtc.js"></script>
     <script src="/js/id3.min.js"></script>
-    <script src="/js/audio.js"></script>
+    <script src="/js/wave-grapher.js"></script>
     <script src="/js/track.js"></script>
+    <script src="/js/audio.js"></script>
     <script src="/js/core.js"></script>
   </head>
   <body>
@@ -28,7 +29,9 @@
             <h5 id="deckAArtist">ARTIST NAME</h5>
             <h5 id="deckAAlbum">ALBUM NAME</h5>
           </div>
-          <canvas id="deckACanvas" style="width: 500px; height: 256px;">
+          <canvas id="deckACanvas" style="width: 500px; height: 100px;">
+          </canvas>
+          <canvas id="deckAVisCanvas" style="width: 500px; height: 100px;">
           </canvas>
         </div>
       </div>
@@ -46,10 +49,13 @@
             <h5 id="deckBArtist">ARTIST NAME</h5>
             <h5 id="deckBAlbum">ALBUM NAME</h5>
           </div>
-          <canvas id="deckBCanvas" style="width: 500px; height: 256px;">
+          <canvas id="deckBCanvas" style="width: 500px; height: 100px;">
+          </canvas>
+          <canvas id="deckBVisCanvas" style="width: 500px; height: 100px;">
           </canvas>
         </div>
       </div>
+
 
       <table class="table table-striped" id="track-table">
         <th>

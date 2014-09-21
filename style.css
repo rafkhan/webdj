@@ -3,10 +3,10 @@ h1,h2,h3,h4,h5,h6 {
   padding: 0;
 }
 
+
 .deckContainer {
   width: 500px;
-  height: 350px;
-  background: #DDD;
+  height: 300px;
   display: inline-block;
 }
 
@@ -14,19 +14,17 @@ h1,h2,h3,h4,h5,h6 {
 .deckContainer.deckB { float: right; }
 
 .deckInfoContainer {
-  height: 94px; //500 - 256
+  height: 95px; //500 - 256
   width: 100%;
   padding: 5px;
 }
 
 #mixerBoardContainer {
   display: inline-block;
-  height: 350px;
+  height: 300px;
 }
 
 .mixerContainer {
   height: 100%;
 }
 
-.mixerA {
-}
