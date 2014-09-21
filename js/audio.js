@@ -102,8 +102,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     song.nodeChain.push(song.src);
 
 
-    var masterGain = _audio.context.createGain();
-    song.nodeChain.push(masterGain);
+    var deckGain = _audio.context.createGain();
+    song.nodeChain.push(deckGain);
+    deckGain.gain.value = 1.0;
+
+    var xfadeGain = _audio.context.createGain();
+    song.nodeChain.push(xfadeGain);
 
     song.nodeChain.push(_audio.merger);
 
@@ -111,7 +115,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       song.nodeChain[i-1].connect(song.nodeChain[i]);
     }
 
-    masterGain.gain.value = 1.0;
 
 
     deck[deckName] = song;
@@ -165,8 +168,17 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     // Use an equal-power crossfading curve:
     var gain1 = Math.cos(x * 0.5*Math.PI);
     var gain2 = Math.cos((1.0 - x) * 0.5*Math.PI);
-    this.ctl1.gainNode.gain.value = gain1;
-    this.ctl2.gainNode.gain.value = gain2;
+
+    var songA = deck.deckA;
+    var aLen  = songA.nodeChain.length;
+    var songB = deck.deckB;
+    var bLen  = songB.nodeChain.length;
+
+    console.log('xfa', songA.nodeChain[aLen - 2]);
+    console.log('xfb', songB.nodeChain[bLen - 2]);
+
+    songA.nodeChain[aLen - 2].gain.value = gain1;
+    songB.nodeChain[bLen - 2].gain.value = gain2;
   };
 
   _audio.pause = function(deckName) {
