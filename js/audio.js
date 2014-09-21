@@ -84,6 +84,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     return peaks;
   }
 
+  function freshSourceEvent(song) {
+      return function(e) {
+          freshSource(song);
+      };
+  }
+
   function freshSource(song) {
     song.src.stop();
     song.src.disconnect();
@@ -95,6 +101,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.load = function(deckName, song) {
     song.src = _audio.context.createBufferSource();
+    song.src.onended = freshSourceEvent(song);
     song.src.buffer = song.buffer;
     song.nodeChain = [];
     song.nodeChain.push(song.src);
@@ -156,7 +163,8 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     }
 
     requestAnimationFrame(waveGrapher.getVisualizerCb(song, canvas));
-    song.src.start(song.offset);
+    song.starttime = new Date();
+    song.src.start(0, song.offset);
   };
 
   _audio.updateDeckVolume = function(deck, val) {
@@ -181,10 +189,11 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     songB.nodeChain[bLen - 2].gain.value = gain1;
   };
 
-  // _audio.pause = function(deckName) {
-  //     var song = deck[deckName];
-  //     freshSource(song);
-  // };
+  _audio.pause = function(deckName) {
+      var song = deck[deckName];
+      song.offset = (new Date().getTime() - song.starttime.getTime()) / 1000;
+      freshSource(song);
+  };
 
   _audio.stop = function(deckName) {
       var song = deck[deckName];
