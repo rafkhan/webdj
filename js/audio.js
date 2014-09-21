@@ -85,10 +85,8 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   }
 
   function freshSource(song) {
-    try {
-      song.src.stop();
-      song.src.disconnect();
-    } catch(ex) {}
+    song.src.stop();
+    song.src.disconnect();
 
     song.src = _audio.context.createBufferSource();
     song.src.buffer = song.buffer;
