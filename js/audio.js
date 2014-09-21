@@ -174,9 +174,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var gain2 = Math.cos((1.0 - x) * 0.5*Math.PI);
 
     var songA = deck.deckA;
-    var aLen  = songA.nodeChain.length;
+    var aLen, bLen;
+    if (songA != undefined)
+      aLen = songA.nodeChain.length;
     var songB = deck.deckB;
-    var bLen  = songB.nodeChain.length;
+    if (songB != undefined)
+      bLen  = songB.nodeChain.length;
 
     if (songA != undefined)
       songA.nodeChain[aLen - 2].gain.value = gain2;
@@ -192,6 +195,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   
   _audio.adjustVolume = function(deckName, val) {
     var song = deck[deckName];
+    if (song == undefined) return;
     song.nodeChain[song.nodeChain.length - 3]
       .gain.value = val / 127;
   };
@@ -222,6 +226,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   };
 
   _audio.getCue = function(deckName, index) {
+    if (deck[deckName] == undefined) return null;
     deck[deckName].cues = deck[deckName].cues ||
         [null, null, null, null, null, null, null, null];
 
