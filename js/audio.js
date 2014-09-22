@@ -85,7 +85,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   function freshSourceEvent(song) {
       return function(e) {
-          freshSource(song);
+          freshSourceCommon(song);
       };
   }
 
@@ -94,6 +94,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
         return;
     song.starttime = null;
     song.src.stop();
+    freshSourceCommon(song);
+  }
+
+  function freshSourceCommon(song) {
     song.src.disconnect();
 
     song.src = _audio.context.createBufferSource();
@@ -179,6 +183,11 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     }
 
     song.starttime = new Date(((new Date().getTime()/1000) - song.offset)*1000);
+    rtc.connection.send({
+        deck: deckName,
+        title: song.tags.title,
+        artist: song.tags.artist
+    });
     song.src.start(0, song.offset);
   };
 
@@ -213,6 +222,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
       if (!song.starttime) return;
       song.offset = (new Date().getTime() - song.starttime.getTime()) / 1000;
       freshSource(song);
+      rtc.connection.send({
+          deck: deckName,
+          paused: true
+      })
   };
   
   _audio.adjustVolume = function(deckName, val) {

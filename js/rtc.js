@@ -10,7 +10,7 @@
     var roomFirebase = new Firebase(firebaseURL + roomid);
     roomFirebase.once('value', function(data) {
         function addstream(e) {
-            e.mediaElement.style.visibility = "none";
+            e.mediaElement.style.display = "none";
             document.body.appendChild(e.mediaElement);
         }
 
@@ -18,7 +18,8 @@
         if (sessionDescription == null) {
             connection.session = {
                 audio: true,
-                oneway: true
+                oneway: true,
+                data: true
             };
 
             connection.dontCaptureUserMedia = true;
@@ -31,6 +32,24 @@
             // var session = {};
             connection.session = {};
             connection.onstream = addstream;
+            connection.onmessage = function(e) {
+                var deckel = document.getElementById("listener-"+e.data.deck);
+                if (e.data.paused) {
+                    deckel.innerhtml = "";
+                    return;
+                }
+                var innerhtml = e.data.title || undefined;
+                if (e.data.artist) {
+                    if (!innerhtml)
+                        innerhtml = e.data.artist || undefined;
+                    else
+                        innerhtml += " by "+e.data.artist;
+                }
+                if (innerhtml)
+                    deckel.innerHTML = e.data.title + " by " + e.data.artist;
+                else
+                    deckel.innerHTML = "...some song by some artist";
+            }
             connection.join(sessionDescription);
             document.getElementById("listener-wrapper").style.display = "block";
         }
