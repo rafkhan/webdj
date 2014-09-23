@@ -20,10 +20,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   var deckAName;
   var deckAArtist;
   var deckAAlbum;
+  var deckAButton;
 
   var deckBName;
   var deckBArtist;
   var deckBAlbum;
+  var deckBButton;
 
   var deckACanvas;
   var deckAVisCanvas;
@@ -37,10 +39,12 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     deckAName = document.getElementById('deckAName');
     deckAArtist = document.getElementById('deckAArtist');
     deckAAlbum = document.getElementById('deckAAlbum');
+    deckAButton = document.getElementById('deckA-button');
 
     deckBName = document.getElementById('deckBName');
     deckBArtist = document.getElementById('deckBArtist');
     deckBAlbum = document.getElementById('deckBAlbum');
+    deckBButton = document.getElementById('deckB-button');
 
     deckACanvas = document.getElementById('deckACanvas');
     deckADrawCtx = deckACanvas.getContext('2d');
@@ -174,16 +178,34 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   };
 
+  function pauseEvent(deckName) {
+      return function(e) {
+          _audio.pause(deckName);
+      }
+  }
+
+  function playEvent(deckName) {
+      return function(e) {
+          _audio.play(deckName);
+      }
+  }
+
   _audio.play = function(deckName, reqAnim) {
     var song = deck[deckName];
     if (song == undefined) return;
 
     var canvas;
+    var button;
     if(deckName === 'deckA') {
       canvas = deckAVisCanvas;
+      button = deckAButton;
     } else if(deckName === 'deckB') {
       canvas = deckBVisCanvas;
+      button = deckBButton;
     }
+
+    button.value = "&#9208;";
+    button.onclick = pauseEvent(deckName);
 
     if(!reqAnim) {
       requestAnimationFrame(waveGrapher.getVisualizerCb(song.nodeChain[song.nodeChain.length - 2], canvas));
@@ -225,14 +247,25 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
   };
 
   _audio.pause = function(deckName) {
-      var song = deck[deckName];
-      if (!song.starttime) return;
-      song.offset = (new Date().getTime() - song.starttime.getTime()) / 1000;
-      freshSource(song);
-      rtc.connection.send({
-          deck: deckName,
-          paused: true
-      })
+    var song = deck[deckName];
+    if (!song.starttime) return;
+    song.offset = (new Date().getTime() - song.starttime.getTime()) / 1000;
+
+    var button;
+    if(deckName === 'deckA') {
+      button = deckAButton;
+    } else if(deckName === 'deckB') {
+      button = deckBButton;
+    }
+
+    button.value = "&#9654;";
+    button.onclick = playEvent(deckName);
+
+    freshSource(song);
+    rtc.connection.send({
+      deck: deckName,
+      paused: true
+    })
   };
   
   _audio.adjustVolume = function(deckName, val) {
