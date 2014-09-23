@@ -5,7 +5,13 @@
 
   _track.playOnDeck = function(deck, i) {
     var reader = new FileReader();
-    var newTrack = track.list[i]
+    var newTrack = track.list[i];
+    if (audioManager.deck[deck]) {
+        if (!audioManager.deck[deck].queue)
+            audioManager.deck[deck].queue = [];
+        audioManager.deck[deck].push(i);
+        return;
+    }
     reader.onload = (function(e) {
       newTrack.context.decodeAudioData(reader.result, function(audioBuffer) {
         newTrack.buffer = audioBuffer;
@@ -17,7 +23,6 @@
   }
 
   _track.bind = function(i) {
-    console.log('asd');
     var reader = new FileReader();
     var newTrack = track.list[i];
     reader.onload = (function(e) {

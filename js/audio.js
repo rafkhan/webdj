@@ -15,7 +15,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     
 
   var deck = {};
-
+  _audio.deck = deck;
 
   var deckAName;
   var deckAArtist;
@@ -83,9 +83,20 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
     return peaks;
   }
 
-  function freshSourceEvent(song) {
+  function freshSourceEvent(deckName) {
       return function(e) {
-          freshSourceCommon(song);
+          song = deck[deckName];
+          song.src.disconnect();
+          if (song.queue) {
+              var i = song.queue.shift();
+              if (song.queue.length != 0)
+                  track.list[i].queue = song.queue;
+              track.playOnDeck(deckName, i);
+              return;
+          }
+          song.src = _audio.context.createBufferSource();
+          song.src.buffer = song.buffer;
+          song.src.connect(song.nodeChain[1]);
       };
   }
 
@@ -94,10 +105,6 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
         return;
     song.starttime = null;
     song.src.stop();
-    freshSourceCommon(song);
-  }
-
-  function freshSourceCommon(song) {
     song.src.disconnect();
 
     song.src = _audio.context.createBufferSource();
@@ -107,7 +114,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
   _audio.load = function(deckName, song) {
     song.src = _audio.context.createBufferSource();
-    song.src.onended = freshSourceEvent(song);
+    song.src.onended = freshSourceEvent(deckName);
     song.src.buffer = song.buffer;
     song.nodeChain = [];
     song.nodeChain.push(song.src);
